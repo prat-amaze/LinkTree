@@ -2,7 +2,7 @@
 import React, { useState, Suspense } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 
 const GenerateInner = () => {
   const searchParams = useSearchParams();
@@ -23,7 +23,8 @@ const GenerateInner = () => {
   const submitLinks = async () => {
     const raw = JSON.stringify({ links, handle, pic });
 
-    const r = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/add`, {
+    const baseUrl = window.location.origin;
+    const r = await fetch(`${baseUrl}/api/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: raw,
@@ -35,6 +36,7 @@ const GenerateInner = () => {
       setLinks([{ link: "", linktext: "" }]);
       setPic("");
       setHandle("");
+      redirect(`/${handle}`)
     } else {
       toast.error(result.message);
     }
