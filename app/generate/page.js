@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation";
 
-const Generate = () => {
+const GenerateInner = () => {
   const searchParams = useSearchParams();
-  const [links, setLinks] = useState([{ links: "", linktext: "" }]);
+  const [links, setLinks] = useState([{ link: "", linktext: "" }]);
   const [handle, setHandle] = useState(searchParams.get("handle"));
   const [pic, setPic] = useState("");
 
@@ -23,7 +23,7 @@ const Generate = () => {
   const submitLinks = async () => {
     const raw = JSON.stringify({ links, handle, pic });
 
-    const r = await fetch("http://localhost:3000/api/add", {
+    const r = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/add`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: raw,
@@ -136,6 +136,14 @@ const Generate = () => {
 
       <ToastContainer />
     </div>
+  );
+};
+
+const Generate = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GenerateInner />
+    </Suspense>
   );
 };
 

@@ -40,7 +40,7 @@ async function deleteLink(formData) {
 }
 
 export default async function Page({ params }) {
-  const handle = params.handle;
+  const handle =(await params).handle;
   const client = await clientPromise;
   const db = client.db("bittree");
   const collection = db.collection("links");
