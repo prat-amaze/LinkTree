@@ -72,8 +72,8 @@ export default async function Page({ params }) {
                   </button>
                 </Link>
 
-                {/* ✅ Delete Form */}
-                <form action={deleteLink} method="POST">
+                {/* ✅ Delete Form (method removed) */}
+                <form action={deleteLink}>
                   <input type="hidden" name="handle" value={handle} />
                   <input type="hidden" name="link" value={e.link} />
                   <button
@@ -88,10 +88,9 @@ export default async function Page({ params }) {
         )}
       </div>
 
-      {/* ✅ Add Link Form */}
+      {/* ✅ Add Link Form (method removed) */}
       <form
         action={addLink}
-        method="POST"
         className="mt-10 flex flex-col sm:flex-row items-center gap-2 w-full max-w-md px-4"
       >
         <input type="hidden" name="handle" value={handle} />
